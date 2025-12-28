@@ -12,12 +12,9 @@ function createOptions(): ZipOptions {
     };
 }
 
-async function checkZip(filePath: string, files: string[]): Promise<void> {
+async function checkZip(filePath: string): Promise<string[]> {
     const zip = await JSZip().loadAsync(await fs.readFile(filePath));
-    const paths = Object.keys(zip.files);
-    files.forEach((file) => {
-        expect(paths.includes(file)).toBeTruthy();
-    });
+    return Object.keys(zip.files).map((v) => v.replaceAll('\\', '/'));
 }
 
 afterAll(async () => {
@@ -48,7 +45,7 @@ it('build zip', async () => {
     const filePath = await zip.save('tests/zipOutDir', '2.zip');
     expect(filePath).not.toBeNull();
 
-    checkZip(filePath, [
+    expect(await checkZip(filePath)).toStrictEqual([
         'assets/',
         'assets/a.css',
         'assets/a.js',
@@ -77,7 +74,7 @@ it('filter files', async () => {
 
     expect(options.filter).toHaveBeenCalled();
 
-    checkZip(filePath, [
+    expect(await checkZip(filePath)).toStrictEqual([
         'assets/',
         'assets/a.css',
         'assets/a.js',
@@ -146,8 +143,5 @@ it.each([
     const filePath = await zip.save('tests/zipOutDir', '4.zip');
     expect(filePath).not.toBeNull();
 
-    checkZip(filePath, files);
-
-    // const { size: fileSize } = await fs.stat(filePath);
-    // expect(fileSize).toBe(size);
+    expect(await checkZip(filePath)).toStrictEqual(files);
 });
