@@ -1,6 +1,6 @@
 import type { PackOptions } from '../src/pack';
 import fs from 'node:fs/promises';
-import { afterEach, expect, it, vi } from 'vitest';
+import { afterAll, expect, it, vi } from 'vitest';
 import zipPackPlugin from '../src';
 import { fileExists } from '../src/utils';
 
@@ -18,7 +18,7 @@ function createOptions(): PackOptions {
     };
 }
 
-afterEach(async () => {
+afterAll(async () => {
     if (await fileExists('tests/indexOutDir')) {
         await fs.rm('tests/indexOutDir', {
             force: true,

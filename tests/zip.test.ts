@@ -1,6 +1,6 @@
 import type { ZipOptions } from '../src/zip';
 import fs from 'node:fs/promises';
-import { afterEach, expect, it, vi } from 'vitest';
+import { afterAll, expect, it, vi } from 'vitest';
 import { fileExists } from '../src/utils';
 import Zip from '../src/zip';
 
@@ -11,9 +11,9 @@ function createOptions(): ZipOptions {
     };
 }
 
-afterEach(async () => {
-    if (await fileExists('tests/outDir')) {
-        await fs.rm('tests/outDir', {
+afterAll(async () => {
+    if (await fileExists('tests/zipOutDir')) {
+        await fs.rm('tests/zipOutDir', {
             force: true,
             recursive: true
         });
@@ -23,9 +23,9 @@ afterEach(async () => {
 it('remove exist save file', async () => {
     const zip = new Zip(createOptions());
     await zip.addDir('tests/inDir');
-    expect(await zip.save('tests/outDir', 'out.zip')).not.toBeNull();
+    expect(await zip.save('tests/zipOutDir', '1.zip')).not.toBeNull();
 
-    expect(await zip.save('tests/outDir', 'out.zip')).not.toBeNull();
+    expect(await zip.save('tests/zipOutDir', '1.zip')).not.toBeNull();
 });
 
 it('addDir not exist', () => {
@@ -36,7 +36,7 @@ it('addDir not exist', () => {
 it('build zip', async () => {
     const zip = new Zip(createOptions());
     await zip.addDir('tests/inDir');
-    const filePath = await zip.save('tests/outDir', 'out.zip');
+    const filePath = await zip.save('tests/zipOutDir', '2.zip');
     expect(filePath).not.toBeNull();
     const { size } = await fs.stat(filePath);
     expect(size).toBe(13635);
@@ -49,7 +49,7 @@ it('filter files', async () => {
     });
     const zip = new Zip(options);
     await zip.addDir('tests/inDir');
-    const filePath = await zip.save('tests/outDir', 'out.zip');
+    const filePath = await zip.save('tests/zipOutDir', '3.zip');
     expect(filePath).not.toBeNull();
 
     expect(options.filter).toHaveBeenCalled();
@@ -71,7 +71,7 @@ it.each([
     options.pathPrefix = pathPrefix;
     const zip = new Zip(options);
     await zip.addDir('tests/inDir');
-    const filePath = await zip.save('tests/outDir', 'out.zip');
+    const filePath = await zip.save('tests/zipOutDir', '4.zip');
     expect(filePath).not.toBeNull();
 
     const { size: fileSize } = await fs.stat(filePath);
