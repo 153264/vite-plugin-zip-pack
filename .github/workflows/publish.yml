@@ -22,7 +22,6 @@ jobs:
       - uses: actions/setup-node@v4 # 设置Node.js环境
         with:
           node-version: 22 # 指定Node版本
-          registry-url: "https://registry.npmjs.org/" # npm注册表地址
           cache: pnpm
       - name: Install Dependencies
         run: pnpm install
