@@ -2,14 +2,8 @@
 
 📦 一个为 [Vite](https://github.com/vitejs/vite) 设计的打包插件。
 
-<!-- [![Lint Status](https://github.com/153264/vite-plugin-zip-pack/workflows/Lint/badge.svg)](https://github.com/153264/vite-plugin-zip-pack/actions)
-[![Latest Stable Version](https://poser.pugx.org/153264/vite-plugin-zip-pack/v/stable.svg)](https://packagist.org/packages/153264/vite-plugin-zip-pack)
-[![Latest Unstable Version](https://poser.pugx.org/153264/vite-plugin-zip-pack/v/unstable.svg)](https://packagist.org/packages/153264/vite-plugin-zip-pack)
-[![Total Downloads](https://poser.pugx.org/153264/vite-plugin-zip-pack/downloads)](https://packagist.org/packages/153264/vite-plugin-zip-pack) -->
-
-<!-- [![npm](https://img.shields.io/npm/v/@adjfut/vite-plugin-zip-pack)](https://www.npmjs.com/package/@adjfut/vite-plugin-zip-pack) -->
-
-[![License](https://poser.pugx.org/153264/vite-plugin-zip-pack/license)](https://packagist.org/packages/153264/vite-plugin-zip-pack)
+[![Lint Status](https://github.com/153264/vite-plugin-zip-pack/workflows/Lint/badge.svg)](https://github.com/153264/vite-plugin-zip-pack/actions)
+[![npm](https://img.shields.io/npm/v/@adjfut/vite-plugin-zip-pack)](https://www.npmjs.com/package/@adjfut/vite-plugin-zip-pack)
 
 ## 功能特性
 
