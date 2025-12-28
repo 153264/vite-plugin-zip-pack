@@ -1,0 +1,29 @@
+name: Lint
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "tests/**"
+      - "docs/**"
+
+jobs:
+  eslint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Install Dependencies
+        run: pnpm install
+      - name: Run Lint
+        run: pnpm run lint:check
+
+  prettier:
+    name: Prettier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Install Dependencies
+        run: pnpm install
+      - name: Run Prettier
+        run: pnpm run format:check

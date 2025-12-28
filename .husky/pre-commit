@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+# 代码样式检查
+pnpm run format:check
+# 代码检查
+pnpm run lint:check
+# 单元测试
+# pnpm run test
