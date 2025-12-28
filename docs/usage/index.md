@@ -10,14 +10,14 @@ vite-plugin-zip-pack 是一个开源的 [Vite](https://cn.vite.dev/) 非官方�
 ## 安装
 
 ```shell:no-line-numbers
-npm install -D @153264/vite-plugin-zip-pack
+npm install -D @adjfut/vite-plugin-zip-pack
 ```
 
 ## 使用
 ```ts
 // vite.config.js
 
-import zipPack from '@153264/vite-plugin-zip-pack'
+import zipPack from '@adjfut/vite-plugin-zip-pack'
 import { defineConfig } from 'vite'
 
 export default defineConfig({

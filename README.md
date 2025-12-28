@@ -7,7 +7,7 @@
 [![Latest Unstable Version](https://poser.pugx.org/153264/vite-plugin-zip-pack/v/unstable.svg)](https://packagist.org/packages/153264/vite-plugin-zip-pack)
 [![Total Downloads](https://poser.pugx.org/153264/vite-plugin-zip-pack/downloads)](https://packagist.org/packages/153264/vite-plugin-zip-pack) -->
 
-<!-- [![npm](https://img.shields.io/npm/v/@153264/vite-plugin-zip-pack)](https://www.npmjs.com/package/@153264/vite-plugin-zip-pack) -->
+<!-- [![npm](https://img.shields.io/npm/v/@adjfut/vite-plugin-zip-pack)](https://www.npmjs.com/package/@adjfut/vite-plugin-zip-pack) -->
 
 [![License](https://poser.pugx.org/153264/vite-plugin-zip-pack/license)](https://packagist.org/packages/153264/vite-plugin-zip-pack)
 
@@ -20,7 +20,7 @@
 ## 安装
 
 ```bash
-npm install -D @153264/vite-plugin-zip-pack
+npm install -D @adjfut/vite-plugin-zip-pack
 ```
 
 ## 使用示例
@@ -28,7 +28,7 @@ npm install -D @153264/vite-plugin-zip-pack
 ```ts
 // vite.config.js
 
-import zipPack from '@153264/vite-plugin-zip-pack'
+import zipPack from '@adjfut/vite-plugin-zip-pack'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
