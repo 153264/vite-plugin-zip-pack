@@ -29,3 +29,5 @@ esm-ssr
 
 cache
 coverage
+
+tests/*OutDir*

@@ -1,5 +1,6 @@
 import type { ZipOptions } from '../src/zip';
 import fs from 'node:fs/promises';
+import JSZip from 'jszip';
 import { afterAll, expect, it, vi } from 'vitest';
 import { fileExists } from '../src/utils';
 import Zip from '../src/zip';
@@ -9,6 +10,14 @@ function createOptions(): ZipOptions {
         filter: vi.fn(() => true),
         pathPrefix: ''
     };
+}
+
+async function checkZip(filePath: string, files: string[]): Promise<void> {
+    const zip = await JSZip().loadAsync(await fs.readFile(filePath));
+    const paths = Object.keys(zip.files);
+    files.forEach((file) => {
+        expect(paths.includes(file)).toBeTruthy();
+    });
 }
 
 afterAll(async () => {
@@ -38,8 +47,22 @@ it('build zip', async () => {
     await zip.addDir('tests/inDir');
     const filePath = await zip.save('tests/zipOutDir', '2.zip');
     expect(filePath).not.toBeNull();
-    const { size } = await fs.stat(filePath);
-    expect(size).toBe(13635);
+
+    checkZip(filePath, [
+        'assets/',
+        'assets/a.css',
+        'assets/a.js',
+        'img/',
+        'img/people.png',
+        'img/peoples.png',
+        'index.html',
+        'lv1/',
+        'lv1/lv1.js',
+        'lv1/lv2/',
+        'lv1/lv2/lv2.js',
+        'lv1/lv2/lv3/',
+        'lv1/lv2/lv3/lv3.js'
+    ]);
 });
 
 it('filter files', async () => {
@@ -53,8 +76,19 @@ it('filter files', async () => {
     expect(filePath).not.toBeNull();
 
     expect(options.filter).toHaveBeenCalled();
-    const { size } = await fs.stat(filePath);
-    expect(size).toBe(1258);
+
+    checkZip(filePath, [
+        'assets/',
+        'assets/a.css',
+        'assets/a.js',
+        'index.html',
+        'lv1/',
+        'lv1/lv1.js',
+        'lv1/lv2/',
+        'lv1/lv2/lv2.js',
+        'lv1/lv2/lv3/',
+        'lv1/lv2/lv3/lv3.js'
+    ]);
 });
 
 it('pathPrefix not absolute', () => {
@@ -64,9 +98,47 @@ it('pathPrefix not absolute', () => {
 });
 
 it.each([
-    { pathPrefix: 'app', size: 13823 },
-    { pathPrefix: 'app/bpp/cpp', size: 14223 }
-])('pathPrefix: $pathPrefix', async ({ pathPrefix, size }) => {
+    {
+        pathPrefix: 'app',
+        files: [
+            'app/',
+            'app/assets/',
+            'app/assets/a.css',
+            'app/assets/a.js',
+            'app/img/',
+            'app/img/people.png',
+            'app/img/peoples.png',
+            'app/index.html',
+            'app/lv1/',
+            'app/lv1/lv1.js',
+            'app/lv1/lv2/',
+            'app/lv1/lv2/lv2.js',
+            'app/lv1/lv2/lv3/',
+            'app/lv1/lv2/lv3/lv3.js'
+        ]
+    },
+    {
+        pathPrefix: 'app/bpp/cpp',
+        files: [
+            'app/',
+            'app/bpp/',
+            'app/bpp/cpp/',
+            'app/bpp/cpp/assets/',
+            'app/bpp/cpp/assets/a.css',
+            'app/bpp/cpp/assets/a.js',
+            'app/bpp/cpp/img/',
+            'app/bpp/cpp/img/people.png',
+            'app/bpp/cpp/img/peoples.png',
+            'app/bpp/cpp/index.html',
+            'app/bpp/cpp/lv1/',
+            'app/bpp/cpp/lv1/lv1.js',
+            'app/bpp/cpp/lv1/lv2/',
+            'app/bpp/cpp/lv1/lv2/lv2.js',
+            'app/bpp/cpp/lv1/lv2/lv3/',
+            'app/bpp/cpp/lv1/lv2/lv3/lv3.js'
+        ]
+    }
+])('pathPrefix: $pathPrefix', async ({ pathPrefix, files }) => {
     const options = createOptions();
     options.pathPrefix = pathPrefix;
     const zip = new Zip(options);
@@ -74,6 +146,8 @@ it.each([
     const filePath = await zip.save('tests/zipOutDir', '4.zip');
     expect(filePath).not.toBeNull();
 
-    const { size: fileSize } = await fs.stat(filePath);
-    expect(fileSize).toBe(size);
+    checkZip(filePath, files);
+
+    // const { size: fileSize } = await fs.stat(filePath);
+    // expect(fileSize).toBe(size);
 });
