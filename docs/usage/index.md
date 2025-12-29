@@ -237,6 +237,5 @@ build:
 ## 下一步
 
 - 查看 [配置选项详解](./config.md) 了解所有可用配置
-- 查看 [API 参考](./api.md) 了解完整的 API 文档
 - 查看 [常见问题](../troubleshooting.md) 解决遇到的问题
 - 查看 [贡献指南](../contributing.md) 参与项目贡献

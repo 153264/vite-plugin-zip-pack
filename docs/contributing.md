@@ -12,7 +12,7 @@ outline: deep
 
 如果你发现了 bug，请：
 
-1. 先查看 [常见问题](../troubleshooting.md) 和 [GitHub Issues](https://github.com/153264/vite-plugin-zip-pack/issues) 确认是否已有相关问题
+1. 先查看 [常见问题](/troubleshooting.md) 和 [GitHub Issues](https://github.com/153264/vite-plugin-zip-pack/issues) 确认是否已有相关问题
 2. 如果不存在，请创建新的 Issue，包含：
    - 清晰的 bug 描述
    - 复现步骤
@@ -192,13 +192,13 @@ npm run build
 
 ## 许可证
 
-通过贡献代码，你同意你的贡献将在 [MIT 许可证](../LICENSE) 下发布。
+通过贡献代码，你同意你的贡献将在 [MIT 许可证](https://github.com/153264/vite-plugin-zip-pack/blob/main/LICENSE) 下发布。
 
 ## 获取帮助
 
 如果你在贡献过程中遇到问题：
 
-- 查看 [常见问题](../troubleshooting.md)
+- 查看 [常见问题](/troubleshooting.md)
 - 在 [GitHub Issues](https://github.com/153264/vite-plugin-zip-pack/issues) 提问
 - 查看现有代码和文档
 
