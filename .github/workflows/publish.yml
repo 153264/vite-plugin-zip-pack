@@ -23,9 +23,10 @@ jobs:
         with:
           node-version: 22 # 指定Node版本
           cache: pnpm
+          registry-url: 'registry.npmjs.org'
       - name: Install Dependencies
         run: pnpm install
       - name: Build
         run: pnpm run build
       - name: Publish
-        run: npm publish --provenance
+        run: npm publish --provenance --access public
