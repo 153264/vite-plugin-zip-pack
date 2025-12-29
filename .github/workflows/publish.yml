@@ -16,17 +16,22 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4 # 检出代码
+
       - uses: pnpm/action-setup@v3
         with:
           version: 9
+
       - uses: actions/setup-node@v4 # 设置Node.js环境
         with:
           node-version: 22 # 指定Node版本
           cache: pnpm
-          registry-url: 'registry.npmjs.org'
+          registry-url: "https://registry.npmjs.org"
+
       - name: Install Dependencies
         run: pnpm install
+
       - name: Build
         run: pnpm run build
+
       - name: Publish
         run: npm publish --provenance --access public
