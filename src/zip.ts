@@ -25,7 +25,7 @@ export default class Zip {
 
     async addDir(inDir: string): Promise<void> {
         if (!(await fileExists(inDir))) {
-            throw new Error(` - "${inDir}" folder does not exist!`);
+            throw new Error(`"${inDir}" folder does not exist!`);
         }
         await this.addFilesToZip(this.zip, inDir);
     }
@@ -86,7 +86,7 @@ export default class Zip {
     }
 
     private async addFilesToZip(zip: JSZip, inDir: string): Promise<void> {
-        const { filter } = this.options;
+        const { options } = this;
         const files = await fs.readdir(inDir);
 
         for (const fileName of files) {
@@ -96,7 +96,7 @@ export default class Zip {
 
             const isDirectory = file.isDirectory();
 
-            if (!filter?.(fileName, filePath, isDirectory)) {
+            if (options?.filter && !options.filter?.(fileName, filePath, isDirectory)) {
                 continue;
             }
 
