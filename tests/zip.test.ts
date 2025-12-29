@@ -36,7 +36,7 @@ it('remove exist save file', async () => {
 
 it('addDir not exist', () => {
     const zip = new Zip(createOptions());
-    expect(() => zip.addDir('tests/a')).rejects.toThrowError(new Error(' - "tests/a" folder does not exist!'));
+    expect(() => zip.addDir('tests/a')).rejects.toThrowError(new Error('"tests/a" folder does not exist!'));
 });
 
 it('build zip', async () => {

@@ -25,7 +25,7 @@ export default class Zip {
 
     async addDir(inDir: string): Promise<void> {
         if (!(await fileExists(inDir))) {
-            throw new Error(` - "${inDir}" folder does not exist!`);
+            throw new Error(`"${inDir}" folder does not exist!`);
         }
         await this.addFilesToZip(this.zip, inDir);
     }
