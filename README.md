@@ -66,7 +66,8 @@ export default defineConfig({
             outDir: './output',
             outFileName: 'my-app.zip',
             pathPrefix: 'my-app',
-            logLevel: ['info', 'fileHash', 'error']
+            enableLogging: true,
+            enableFileHash: true
         })
     ]
 });
@@ -74,16 +75,17 @@ export default defineConfig({
 
 ## 📖 配置选项
 
-| 选项          | 类型                                                               | 默认值       | 说明                 |
-| ------------- | ------------------------------------------------------------------ | ------------ | -------------------- |
-| `inDir`       | `string`                                                           | `'./dist'`   | 需要打包的目录路径   |
-| `outDir`      | `string`                                                           | `'./'`       | 输出压缩包的目录路径 |
-| `outFileName` | `string`                                                           | `'dist.zip'` | 输出压缩包的文件名   |
-| `pathPrefix`  | `string`                                                           | `''`         | 压缩包内的目录前缀   |
-| `filter`      | `function(fileName: string,filePath: string,isDirectory: boolean)` | `undefined`  | 文件过滤函数         |
-| `done`        | `function(file: File)`                                             | `undefined`  | 压缩完成回调         |
-| `error`       | `function(error: Error)`                                           | `undefined`  | 压缩异常回调         |
-| `logLevel`    | `boolean` \| `['info','fileHash','error']`                         | `true`       | 是否输出日志         |
+| 选项             | 类型                                                               | 默认值       | 说明                 |
+| ---------------- | ------------------------------------------------------------------ | ------------ | -------------------- |
+| `inDir`          | `string`                                                           | `'./dist'`   | 需要打包的目录路径   |
+| `outDir`         | `string`                                                           | `'./'`       | 输出压缩包的目录路径 |
+| `outFileName`    | `string`                                                           | `'dist.zip'` | 输出压缩包的文件名   |
+| `pathPrefix`     | `string`                                                           | `''`         | 压缩包内的目录前缀   |
+| `filter`         | `function(fileName: string,filePath: string,isDirectory: boolean)` | `undefined`  | 文件过滤函数         |
+| `done`           | `function(filePath: string)`                                       | `undefined`  | 压缩完成回调         |
+| `error`          | `function(error: Error)`                                           | `undefined`  | 压缩异常回调         |
+| `enableLogging`  | `boolean`                                                          | `true`       | 是否输出日志         |
+| `enableFileHash` | `boolean`                                                          | `true`       | 是否输出文件Hash         |
 
 ### 配置示例
 
@@ -109,8 +111,8 @@ zipPack({
 
 ```ts
 zipPack({
-    done: (file) => {
-        console.log(`压缩完成: ${file.toString()}`);
+    done: (filePath) => {
+        console.log(`压缩完成: ${filePath}`);
         // 可以在这里执行上传、通知等操作
     },
     error: (error) => {
