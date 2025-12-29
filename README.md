@@ -66,7 +66,7 @@ export default defineConfig({
             outDir: './output',
             outFileName: 'my-app.zip',
             pathPrefix: 'my-app',
-            logLevel: ['info','fileHash','error']
+            logLevel: ['info', 'fileHash', 'error']
         })
     ]
 });
@@ -121,6 +121,8 @@ zipPack({
 ```
 
 #### 添加路径前缀
+
+> 必须是相对路径
 
 ```ts
 zipPack({
