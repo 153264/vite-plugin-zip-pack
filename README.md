@@ -43,8 +43,8 @@ yarn add -D @adjfut/vite-plugin-zip-pack
 在 `vite.config.js` 或 `vite.config.ts` 中引入并配置插件：
 
 ```ts
-import { defineConfig } from 'vite';
 import zipPack from '@adjfut/vite-plugin-zip-pack';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
     plugins: [zipPack()]
@@ -56,8 +56,8 @@ export default defineConfig({
 ### 自定义配置
 
 ```ts
-import { defineConfig } from 'vite';
 import zipPack from '@adjfut/vite-plugin-zip-pack';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
     plugins: [
