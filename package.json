@@ -37,8 +37,9 @@
         "dist"
     ],
     "scripts": {
-        "build": "tsup src/index.ts",
+        "prepublishOnly": "pnpm run build",
         "prepare": "husky",
+        "build": "tsup src/index.ts",
         "lint:check": "eslint {src,docs,tests}/**",
         "lint:fix": "eslint {src,docs,tests}/** --fix",
         "format:check": "prettier --check **/*.{ts,json}",
