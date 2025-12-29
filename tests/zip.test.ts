@@ -34,9 +34,9 @@ it('remove exist save file', async () => {
     expect(await zip.save('tests/zipOutDir', '1.zip')).not.toBeNull();
 });
 
-it('addDir not exist', () => {
+it('addDir not exist', async () => {
     const zip = new Zip(createOptions());
-    expect(() => zip.addDir('tests/a')).rejects.toThrowError(new Error('"tests/a" folder does not exist!'));
+    await expect(() => zip.addDir('tests/a')).rejects.toThrowError(new Error('"tests/a" folder does not exist!'));
 });
 
 it('build zip', async () => {
@@ -144,4 +144,28 @@ it.each([
     expect(filePath).not.toBeNull();
 
     expect(await checkZip(filePath)).toStrictEqual(files);
+});
+
+it('filter not exist', async () => {
+    const options = createOptions();
+    options.filter = undefined;
+    const zip = new Zip(options);
+    await zip.addDir('tests/inDir');
+    const filePath = await zip.save('tests/zipOutDir', '5.zip');
+    expect(filePath).not.toBeNull();
+    expect(await checkZip(filePath)).toStrictEqual([
+        'assets/',
+        'assets/a.css',
+        'assets/a.js',
+        'img/',
+        'img/people.png',
+        'img/peoples.png',
+        'index.html',
+        'lv1/',
+        'lv1/lv1.js',
+        'lv1/lv2/',
+        'lv1/lv2/lv2.js',
+        'lv1/lv2/lv3/',
+        'lv1/lv2/lv3/lv3.js'
+    ]);
 });
