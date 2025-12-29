@@ -26,6 +26,7 @@ jobs:
           node-version: 22 # 指定Node版本
           cache: pnpm
           registry-url: "https://registry.npmjs.org"
+          scope: "@adjfut"
 
       - name: Install Dependencies
         run: pnpm install
