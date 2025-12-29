@@ -31,15 +31,12 @@ yarn add -D @adjfut/vite-plugin-zip-pack
 在 `vite.config.js` 或 `vite.config.ts` 中引入并配置插件：
 
 ```ts
-import zipPack from '@adjfut/vite-plugin-zip-pack'
-// vite.config.ts
-import { defineConfig } from 'vite'
+import zipPack from '@adjfut/vite-plugin-zip-pack';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
-    plugins: [
-        zipPack()
-    ]
-})
+    plugins: [zipPack()]
+});
 ```
 
 运行 `npm run build` 后，插件会在构建完成后自动将 `dist` 目录打包成 `dist.zip` 文件。
@@ -51,12 +48,12 @@ export default defineConfig({
 最简单的使用方式，使用默认配置：
 
 ```ts
-import zipPack from '@adjfut/vite-plugin-zip-pack'
-import { defineConfig } from 'vite'
+import zipPack from '@adjfut/vite-plugin-zip-pack';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
     plugins: [zipPack()]
-})
+});
 ```
 
 构建完成后会在项目根目录生成 `dist.zip` 文件。
@@ -64,8 +61,8 @@ export default defineConfig({
 ### 场景 2: 自定义输出路径和文件名
 
 ```ts
-import zipPack from '@adjfut/vite-plugin-zip-pack'
-import { defineConfig } from 'vite'
+import zipPack from '@adjfut/vite-plugin-zip-pack';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
     plugins: [
@@ -75,7 +72,7 @@ export default defineConfig({
             outFileName: 'my-app-v1.0.0.zip'
         })
     ]
-})
+});
 ```
 
 ### 场景 3: 添加版本号前缀
@@ -83,8 +80,8 @@ export default defineConfig({
 如果你希望压缩包内的文件都在一个带版本号的目录下：
 
 ```ts
-import zipPack from '@adjfut/vite-plugin-zip-pack'
-import { defineConfig } from 'vite'
+import zipPack from '@adjfut/vite-plugin-zip-pack';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
     plugins: [
@@ -92,10 +89,11 @@ export default defineConfig({
             pathPrefix: 'my-app-v1.0.0'
         })
     ]
-})
+});
 ```
 
 这样压缩包内的文件结构会是：
+
 ```
 my-app-v1.0.0/
   ├── index.html
@@ -108,8 +106,8 @@ my-app-v1.0.0/
 排除某些文件或目录：
 
 ```ts
-import zipPack from '@adjfut/vite-plugin-zip-pack'
-import { defineConfig } from 'vite'
+import zipPack from '@adjfut/vite-plugin-zip-pack';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
     plugins: [
@@ -117,21 +115,21 @@ export default defineConfig({
             filter: (fileName, filePath, isDirectory) => {
                 // 排除 .map 文件
                 if (fileName.endsWith('.map')) {
-                    return false
+                    return false;
                 }
                 // 排除测试文件
                 if (fileName.includes('.test.')) {
-                    return false
+                    return false;
                 }
                 // 排除 node_modules
                 if (isDirectory && fileName === 'node_modules') {
-                    return false
+                    return false;
                 }
-                return true
+                return true;
             }
         })
     ]
-})
+});
 ```
 
 ### 场景 5: 构建后自动上传
@@ -139,26 +137,22 @@ export default defineConfig({
 使用回调函数在打包完成后执行自定义操作：
 
 ```ts
-import zipPack from '@adjfut/vite-plugin-zip-pack'
-import { defineConfig } from 'vite'
-import { uploadToServer } from './upload'
+import zipPack from '@adjfut/vite-plugin-zip-pack';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
     plugins: [
         zipPack({
-            done: async (filePath) => {
-                console.log(`压缩完成: ${filePath}`)
+            done: async (file) => {
+                const filePath = file.toString();
                 // 自动上传到服务器
-                await uploadToServer(filePath)
             },
             error: (error) => {
-                console.error('压缩失败:', error)
                 // 发送错误通知
-                sendErrorNotification(error)
             }
         })
     ]
-})
+});
 ```
 
 ### 场景 6: 禁用日志和哈希输出
@@ -166,17 +160,17 @@ export default defineConfig({
 如果不需要详细的日志信息：
 
 ```ts
-import zipPack from '@adjfut/vite-plugin-zip-pack'
-import { defineConfig } from 'vite'
+import zipPack from '@adjfut/vite-plugin-zip-pack';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
     plugins: [
         zipPack({
-            enableLogging: false,
-            enableFileHash: false
+            // ['info', 'fileHash', 'error'] | boolean
+            logLevel: false
         })
     ]
-})
+});
 ```
 
 ## 与 CI/CD 集成
@@ -187,39 +181,39 @@ export default defineConfig({
 name: Build and Package
 
 on:
-  push:
-    branches: [ main ]
+    push:
+        branches: [main]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - run: npm install
-      - run: npm run build
-      # 构建完成后会自动生成 dist.zip
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: dist-zip
-          path: dist.zip
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: '18'
+            - run: npm install
+            - run: npm run build
+            # 构建完成后会自动生成 dist.zip
+            - name: Upload artifact
+              uses: actions/upload-artifact@v3
+              with:
+                  name: dist-zip
+                  path: dist.zip
 ```
 
 ### GitLab CI
 
 ```yaml
 build:
-  stage: build
-  script:
-    - npm install
-    - npm run build
-  artifacts:
-    paths:
-      - dist.zip
-    expire_in: 1 week
+    stage: build
+    script:
+        - npm install
+        - npm run build
+    artifacts:
+        paths:
+            - dist.zip
+        expire_in: 1 week
 ```
 
 ## 注意事项

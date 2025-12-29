@@ -13,8 +13,7 @@ function createOptions(): PackOptions {
         outFileName: 'pack.zip',
         done: vi.fn(() => {}),
         error: vi.fn(() => {}),
-        enableLogging: true,
-        enableFileHash: true
+        logLevel: false
     };
 }
 
@@ -44,18 +43,20 @@ it('error', async () => {
     expect(options.error).toBeCalled();
 });
 
-it('disable enableFileHash', async () => {
+it('enable logging', async () => {
     const options = createOptions();
     options.outFileName = '3.zip';
-    options.enableFileHash = false;
+    options.logLevel = ['info'];
     const pack = new Pack(options);
     await pack.pack();
+    expect(options.done).toBeCalled();
 });
 
-it('disable enableLogging', async () => {
+it('enable all logging', async () => {
     const options = createOptions();
     options.outFileName = '4.zip';
-    options.enableLogging = false;
+    options.logLevel = true;
     const pack = new Pack(options);
     await pack.pack();
+    expect(options.done).toBeCalled();
 });

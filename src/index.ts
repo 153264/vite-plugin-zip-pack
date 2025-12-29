@@ -3,7 +3,7 @@ import type { PackOptions } from './pack';
 import Pack from './pack';
 
 export default function zipPackPlugin(options: Partial<PackOptions> = {}): Plugin {
-    const _options = {
+    const _options: PackOptions = {
         inDir: './dist',
         outDir: './',
         outFileName: 'dist.zip',
@@ -11,8 +11,7 @@ export default function zipPackPlugin(options: Partial<PackOptions> = {}): Plugi
         // done: () => {},
         // error: () => {},
         // filter: () => true,
-        enableLogging: true,
-        enableFileHash: true,
+        logLevel: true,
         ...options
     };
 

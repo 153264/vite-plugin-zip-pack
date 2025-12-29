@@ -13,8 +13,7 @@ function createOptions(): PackOptions {
         outFileName: 'pack.zip',
         done: vi.fn(() => {}),
         error: vi.fn(() => {}),
-        enableLogging: true,
-        enableFileHash: true
+        logLevel: false
     };
 }
 
