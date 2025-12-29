@@ -51,7 +51,7 @@ export default defineConfig({
 
 ```ts
 zipPack({
-    enableLogging: true,  // 查看详细日志
+    logLevel: true,  // 查看详细日志
     error: (error) => {
         console.error('压缩错误:', error)  // 查看错误信息
     }
@@ -137,7 +137,7 @@ zipPack({
     outFileName: process.env.NODE_ENV === 'production' 
         ? 'app-prod.zip' 
         : 'app-dev.zip',
-    enableLogging: process.env.CI !== 'true'  // CI 环境静默
+    logLevel: process.env.CI !== 'true'  // CI 环境静默
 })
 ```
 
@@ -156,7 +156,7 @@ zipPack({
 
 ```ts
 zipPack({
-    enableFileHash: false  // 加快打包速度
+    logLevel: false  // 加快打包速度
 })
 ```
 
