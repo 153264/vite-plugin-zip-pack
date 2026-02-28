@@ -78,17 +78,24 @@ export default class Pack {
         this.logger('info', chalk.green(`  - Path: ${file.toString()}`));
         this.logger('info', chalk.green(`  - Size: ${await file.formatSize()}`));
 
-        this.logger('fileHash', chalk.green(`  - Md5: ${await file.md5()}`));
-        this.logger('fileHash', chalk.green(`  - Sha256: ${await file.sha256()}`));
+        if (this.hasLogLevel('fileHash')) {
+            this.logger('fileHash', chalk.green(`  - Md5: ${await file.md5()}`));
+            this.logger('fileHash', chalk.green(`  - Sha256: ${await file.sha256()}`));
+        }
+    }
+
+    private hasLogLevel(type: LogLevel): boolean {
+        const { logLevel } = this.options;
+        if (typeof logLevel === 'boolean') {
+            return logLevel;
+        }
+        return logLevel.includes(type);
     }
 
     private logger(type: LogLevel, ...msg: any): void {
-        const { logLevel } = this.options;
-        if (logLevel === false) {
+        if (!this.hasLogLevel(type)) {
             return;
         }
-        if (logLevel === true || logLevel.includes(type)) {
-            console.log(...msg);
-        }
+        console.log(...msg);
     }
 }
